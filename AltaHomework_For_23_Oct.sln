@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltaHomework_For_23_Oct", "AltaHomework_For_23_Oct\AltaHomework_For_23_Oct.csproj", "{DE3D511F-A999-4C75-A39D-6228C5BD43DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE3D511F-A999-4C75-A39D-6228C5BD43DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE3D511F-A999-4C75-A39D-6228C5BD43DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE3D511F-A999-4C75-A39D-6228C5BD43DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE3D511F-A999-4C75-A39D-6228C5BD43DB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {54058D66-2364-4C37-816B-629DE10DB63C}
+	EndGlobalSection
+EndGlobal
