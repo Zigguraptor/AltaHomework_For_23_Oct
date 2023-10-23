@@ -26,6 +26,10 @@ public class UsersDataDbContext : DbContext
             .HasKey(m => m.Guid);
 
         modelBuilder.Entity<MessageEntity>()
+            .Property(e => e.MessageText)
+            .HasColumnName("MessageText");
+
+        modelBuilder.Entity<MessageEntity>()
             .HasOne(u => u.Sender)
             .WithMany(u => u.OutMessages)
             .HasForeignKey(m => m.SenderGuid);

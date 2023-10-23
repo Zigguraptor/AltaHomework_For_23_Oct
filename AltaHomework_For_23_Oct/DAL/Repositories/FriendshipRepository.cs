@@ -15,6 +15,14 @@ public class FriendshipRepository
     /// <returns>Errors</returns>
     public string? FriendsRequestAsync(FriendshipDto friendshipDto)
     {
+        if (_usersDataDbContext.UsersFriends.FirstOrDefault(e =>
+                e.User1Guid == friendshipDto.SubjectUserGuid && e.User2Guid == friendshipDto.ObjectUserGuid) != null)
+            return "Friendship already exist.\n";
+
+        if (_usersDataDbContext.UsersFriends.FirstOrDefault(e =>
+                e.User2Guid == friendshipDto.SubjectUserGuid && e.User1Guid == friendshipDto.ObjectUserGuid) != null)
+            return "Friendship already exist.\n";
+
         var requestEntity = _usersDataDbContext.FriendsRequests.FirstOrDefault(e =>
             e.User1Guid == friendshipDto.SubjectUserGuid && e.User2Guid == friendshipDto.ObjectUserGuid);
 
@@ -44,8 +52,8 @@ public class FriendshipRepository
         {
             CreationDateTime = DateTime.UtcNow,
             LastModDateTime = DateTime.UtcNow,
-            User1Guid = friendshipDto.ObjectUserGuid,
-            User2Guid = friendshipDto.SubjectUserGuid
+            User1Guid = friendshipDto.SubjectUserGuid,
+            User2Guid = friendshipDto.ObjectUserGuid
         };
 
         _usersDataDbContext.FriendsRequests.Add(friendshipRequestEntity);
@@ -53,13 +61,15 @@ public class FriendshipRepository
         return null;
     }
 
-    public Task<List<string>> GetFriendsByNameAsync(string userName)
+    public async Task<List<string>> GetFriendsByNameAsync(string userName)
     {
-        return _usersDataDbContext.UsersFriends
-            .Where(e => e.User1.UserName.ToLower() == userName.ToLower()).Select(e => e.User2.UserLink)
-            .Union(
-                _usersDataDbContext.UsersFriends
-                    .Where(e => e.User2.UserName.ToLower() == userName.ToLower()).Select(e => e.User1.UserLink))
-            .ToListAsync();
+        var friends = await _usersDataDbContext.UsersFriends
+            .Where(e => e.User1.UserName.ToLower() == userName.ToLower())
+            .Select(e => e.User2.UserLink).ToListAsync();
+        friends.AddRange(await _usersDataDbContext.UsersFriends
+            .Where(e => e.User2.UserName.ToLower() == userName.ToLower())
+            .Select(e => e.User1.UserLink)
+            .ToListAsync());
+        return friends;
     }
 }

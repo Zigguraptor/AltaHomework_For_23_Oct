@@ -9,14 +9,18 @@ public sealed class UnitOfWork : IDisposable, IAsyncDisposable
     private readonly UsersDataDbContext _dbContext;
 
     private Repository<UserEntity>? _usersRepository;
+    private Repository<MessageEntity>? _messageRepository;
     private FriendshipRepository? _friendshipRepository;
     public UnitOfWork(UsersDataDbContext dbContext) => _dbContext = dbContext;
     public Repository<UserEntity> UsersRepository => _usersRepository ??= new Repository<UserEntity>(_dbContext.Users);
+
     public FriendshipRepository FriendshipRepository => _friendshipRepository ??=
         new FriendshipRepository(_dbContext);
 
-    public async ValueTask DisposeAsync() =>
-        await _dbContext.DisposeAsync();
+    public Repository<MessageEntity> MessagesRepository =>
+        _messageRepository ??= new Repository<MessageEntity>(_dbContext.UserMessages);
+
+    public async ValueTask DisposeAsync() => await _dbContext.DisposeAsync();
 
     public void Dispose() => _dbContext.Dispose();
 
